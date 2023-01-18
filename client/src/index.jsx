@@ -15,6 +15,9 @@ const App = () => {
       contentType: 'application/json',
       success: (data) => {
         setRepos(data)
+      },
+      error: (err) => {
+        console.log(err, 'get request err')
       }
     })
   },[])
@@ -32,8 +35,8 @@ const App = () => {
   return (
     <div>
       <h1>Github Fetcher</h1>
-      <RepoList repos={repos}/>
       <Search onSearch={search}/>
+      <RepoList repos={repos}/>
     </div>
   );
 }
