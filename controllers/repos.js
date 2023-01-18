@@ -21,7 +21,7 @@ module.exports = {
       // console.log(db, 'db')
       // console.log(results.data, 'data')
       results.data.forEach((repo) => {
-        db.save(repo);
+        repos.repos.save(repo);
       })
       res.status(200).send(results.data)
     });
