@@ -1,8 +1,9 @@
 const helper = require('../helpers/github.js');
 const db = require('../database/index.js')
+const repos = require('../models/index.js');
 
 module.exports = {
-  fetchFromAPI: function (req, res) {
+  post: function (req, res) {
     // TODO - your code here!
 
     // This route should take the github username provided
@@ -28,11 +29,11 @@ module.exports = {
     // save the repo information in the database
   },
 
-  fetchFromDB: function (req, res) {
+  get: function (req, res) {
     // TODO - your code here!
     // This route should send back the top 25 repos
     console.log(req, 'get req')
-    db.getAll((err, result) => {
+    repos.repos.getAll((err, result) => {
       if (err) {
         console.log(err, 'err in controller')
         res.sendStatus(404);

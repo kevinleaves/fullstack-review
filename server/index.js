@@ -14,9 +14,9 @@ app.use(express.static('client/dist'))
 // this server must serve those files when requested.
 app.use(express.json())
 
-app.post('/repos', repos.repos.fetchFromAPI);
+app.post('/repos', repos.repos.post);
 
-app.get('/repos', repos.repos.fetchFromDB);
+app.get('/repos', repos.repos.get);
 
 let port = 1128;
 

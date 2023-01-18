@@ -1,12 +1,6 @@
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/fetcher', {useNewUrlParser: true, useUnifiedTopology: true});
 
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-// i added lines 4,5,8. everything is wrapped in that db.once. if shit isn't working, just remove the db.on wrapping
-// db.once('open', () => {
-// once we're connected
-
 let repoSchema = new mongoose.Schema({
   // TODO: your schema here!
   repo_id: {type: Number, unique: true, upsert: true},
@@ -16,20 +10,6 @@ let repoSchema = new mongoose.Schema({
   html_url: String,
   updated_at: Date
 });
-
-// COMPILING OUR SCHEMA INTO A MODEL
-let Repo = mongoose.model('Repo', repoSchema);
-
-// query using mongoose
-const getAll = (callback) => {
-  Repo.find({}, callback)
-    .then((repos) => {
-      console.log(repos, 'repos in model')
-    })
-    .catch((err) => {
-      console.log(err, 'err in model')
-    })
-}
 
 let save = (repoObj) => {
   // TODO: Your code here
@@ -56,13 +36,9 @@ let save = (repoObj) => {
     }
     // console.log(result, 'res in here')
   });
-
-
 }
 
-// })
 
 module.exports = {
-  save: save,
-  getAll: getAll
+  repoSchema: repoSchema,
 };
