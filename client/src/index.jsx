@@ -12,7 +12,10 @@ const App = () => {
     $.ajax('/repos', {
       method: 'GET',
       dataType: 'json',
-      contentType: 'application/json'
+      contentType: 'application/json',
+      success: (data) => {
+        setRepos(data)
+      }
     })
   },[])
 

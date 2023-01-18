@@ -9,24 +9,24 @@ let Repo = mongoose.model('Repo', db.repoSchema);
 
 // QUERY DB HERE
 module.exports = {
-  getAll: function (callback) {
-    Repo.find({}, callback)
-      .then((repos) => {
-        console.log(repos, 'repos in model')
-      })
-      .catch((err) => {
-        console.log(err, 'err in model')
-      })
+  getAll: function () {
+    return new Promise ((resolve, reject) => {
+      Repo.find({})
+        .then((repos) => {
+          console.log(repos, 'repos in model')
+          resolve(repos)
+        })
+        .catch((err) => {
+          console.log(err, 'err in model')
+          reject(err)
+        })
+    })
   },
 
   save: function (repoObj) {
-    // TODO: Your code here
-    // This function should save a repo or repos to
-    // the MongoDB
-    // pass in a repo obj?
+    // save a repo to the DB
 
     // instantiate a new repo instance using that obj?
-    //mongo save
     let repo = new Repo({
       repo_id: repoObj.id,
       name: repoObj.name,
@@ -35,8 +35,6 @@ module.exports = {
       html_url: repoObj.html_url,
       updated_at: repoObj.updated_at
     })
-
-    // console.log(repo, 'repo in db')
     // call the native save function?
     repo.save((err, result) => {
       if (err) {
@@ -44,6 +42,19 @@ module.exports = {
       }
       // console.log(result, 'res in here')
     });
+  },
+
+  get25: function () {
+    return new Promise((resolve, reject) => {
+      Repo.find({}).sort({stargazers_count: -1}).limit(25)
+        .then((result) => {
+          resolve(result)
+        })
+        .catch((err) => {
+          console.log(err, 'err in model')
+          reject(err)
+        })
+    })
   }
 
 }
