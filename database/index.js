@@ -43,14 +43,14 @@ let save = (repoObj) => {
     if (err) {
       return console.error(err);
     }
-    console.log(result, 'res in here')
+    // console.log(result, 'res in here')
   });
 
   Repo.find((err, results) => {
     if (err) {
       console.log(err)
     } else {
-      console.log(results, 'in db')
+      // console.log(results, 'in db')
     }
   })
 }

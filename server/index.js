@@ -18,6 +18,7 @@ app.post('/repos', function (req, res) {
   // and get the repo information from the github API, then
   // we're sending the username along with the req.body
   // COMMUNICATE WITH GH API
+  console.log(req, 'im in the controller')
   console.log(req.body, 'req.body')
   helper.getReposByUsername(req.body, (err, results) => {
     if (err) {
@@ -26,7 +27,7 @@ app.post('/repos', function (req, res) {
     }
     // console.log(repos, 'repos')
     // console.log(db, 'db')
-    console.log(results.data, 'data')
+    // console.log(results.data, 'data')
     results.data.forEach((repo) => {
       db.save(repo);
     })

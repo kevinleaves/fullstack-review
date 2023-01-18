@@ -8,7 +8,14 @@ const App = () => {
 
   const [repos, setRepos] = useState([]);
 
+
   const search = (term) => {
+    $.ajax('/repos', {
+      method: 'POST',
+      data: JSON.stringify({username: term}),
+      dataType: 'json',
+      contentType: 'application/json'
+    })
     console.log(`${term} was searched`);
   }
 

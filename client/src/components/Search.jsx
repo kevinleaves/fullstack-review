@@ -10,6 +10,7 @@ const Search = ({ onSearch }) => {
 
   const search = () => {
     onSearch(term);
+    setTerm('');
   }
 
   return (
