@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import Search from './components/Search.jsx';
@@ -8,6 +8,13 @@ const App = () => {
 
   const [repos, setRepos] = useState([]);
 
+  useEffect(() => {
+    $.ajax('/repos', {
+      method: 'GET',
+      dataType: 'json',
+      contentType: 'application/json'
+    })
+  },[])
 
   const search = (term) => {
     $.ajax('/repos', {

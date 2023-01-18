@@ -20,6 +20,17 @@ let repoSchema = new mongoose.Schema({
 // COMPILING OUR SCHEMA INTO A MODEL
 let Repo = mongoose.model('Repo', repoSchema);
 
+// query using mongoose
+const getAll = (callback) => {
+  Repo.find({}, callback)
+    .then((repos) => {
+      console.log(repos, 'repos in model')
+    })
+    .catch((err) => {
+      console.log(err, 'err in model')
+    })
+}
+
 let save = (repoObj) => {
   // TODO: Your code here
   // This function should save a repo or repos to
@@ -46,15 +57,12 @@ let save = (repoObj) => {
     // console.log(result, 'res in here')
   });
 
-  Repo.find((err, results) => {
-    if (err) {
-      console.log(err)
-    } else {
-      // console.log(results, 'in db')
-    }
-  })
+
 }
 
 // })
 
-module.exports.save = save;
+module.exports = {
+  save: save,
+  getAll: getAll
+};
