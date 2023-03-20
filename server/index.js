@@ -1,7 +1,7 @@
 const express = require('express');
 const helper = require('../helpers/github.js');
 const db = require('../database/index.js')
-const repos = require('../controllers/index.js')
+const controller = require('../controllers/index.js')
 
 // SERVER
 
@@ -14,9 +14,9 @@ app.use(express.static('client/dist'))
 // this server must serve those files when requested.
 app.use(express.json())
 
-app.post('/repos', repos.repos.post);
+app.post('/repos', controller.repos.post);
 
-app.get('/repos', repos.repos.get);
+app.get('/repos', controller.repos.get);
 
 let port = 1128;
 

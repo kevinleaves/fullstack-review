@@ -1,6 +1,6 @@
 const helper = require('../helpers/github.js');
 const db = require('../database/index.js')
-const repos = require('../models/index.js');
+const model = require('../models/index.js');
 
 module.exports = {
   post: function (req, res) {
@@ -10,31 +10,36 @@ module.exports = {
     // COMMUNICATE WITH GH API
     // console.log(req, 'im in the controller')
     console.log(req.body, 'req.body')
-    helper.getReposByUsername(req.body, (err, results) => {
-      if (err) {
-        console.log(err, 'err in server/controller')
-        res.sendStatus(404);
-      }
-      // console.log(repos, 'repos')
-      // console.log(db, 'db')
-      // console.log(results.data, 'data')
-      results.data.forEach((repo) => {
-        repos.repos.save(repo);
-      })
-      res.status(200).send(results.data)
-    });
 
+    //PROMISE VERSION
     // helper.getReposByUsername(req.body)
-    //   .then ((results) => {
+    //   .then ((repos) => {
     //     results.data.forEach((repo) => {
-    //       repos.repos.save(repo);
+    //       model.repos.save(repo);
     //     })
-    //     res.status(200).send(results.data)
+    //     res.status(201).send(results.data)
     //   })
     //   .catch((err) => {
     //     console.log(err, 'err in server/controller')
     //     res.sendStatus(404);
     //   })
+
+    helper.getReposByUsername(req.body)
+    .then ((repos) => {
+      console.log(repos, 'after helper')
+      // waits for all repos to be done saving before sending the response code
+      return Promise.all(
+        repos.map((repo) => {
+          return model.repos.save(repo)
+        })
+      )
+      .then((data) => {
+        res.status(201).json(data);
+      })
+      .catch((err) => {
+        res.sendStatus(404);
+      })
+    })
     // save the repo information in the database
   },
 
@@ -42,7 +47,7 @@ module.exports = {
     // This route should send back the top 25 repos
     // console.log(req, 'get req')
 
-    repos.repos.get25()
+    model.repos.get25()
       .then((result) => {
         console.log(result, 'data!')
         res.status(200).send(result);

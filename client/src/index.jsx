@@ -27,7 +27,20 @@ const App = () => {
       method: 'POST',
       data: JSON.stringify({username: term}),
       dataType: 'json',
-      contentType: 'application/json'
+      contentType: 'application/json',
+      success: (data) => {
+        $.ajax('/repos', {
+          method: 'GET',
+          dataType: 'json',
+          contentType: 'application/json',
+          success: (data) => {
+            setRepos(data)
+          },
+          error: (err) => {
+            console.log(err, 'get request err')
+          }
+        })
+      }
     })
     console.log(`${term} was searched`);
   }

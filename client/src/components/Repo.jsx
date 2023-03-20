@@ -1,14 +1,14 @@
 import React from 'react'
 
 
-const Repo = ({repo}) => {
+const Repo = ({ repo }) => {
 
   return (
     <li>
-      <p>Name: {repo.name}</p>
+      <a href={repo.html_url}>Name: {repo.name}</a>
+      <p>Owner: {repo.owner}</p>
       <p>Description: {repo.description}</p>
       <p>Stars: {repo.stargazers_count}</p>
-      <p>URL: {repo.html_url}</p>
       <p>Last Updated: {repo.updated_at}</p>
     </li>
   )

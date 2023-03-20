@@ -6,8 +6,8 @@ const RepoList = ({ repos }) => (
     <h4> Repo List Component </h4>
     There are {repos.length} repos.
     <ol>
-      {repos.map(repo =>
-        <Repo repo={repo}/>
+      {repos.map((repo, index) =>
+        <Repo key={index} repo={repo}/>
       )}
     </ol>
   </div>

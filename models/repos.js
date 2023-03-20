@@ -25,24 +25,44 @@ module.exports = {
 
   save: function (repoObj) {
     // save a repo to the DB
-
     // instantiate a new repo instance using that obj?
     let repo = new Repo({
       repo_id: repoObj.id,
       name: repoObj.name,
+      owner: repoObj.owner.login,
       description: repoObj.description,
       stargazers_count: repoObj.stargazers_count,
       html_url: repoObj.html_url,
       updated_at: repoObj.updated_at
     })
+
+    return Repo.findOne({ repo_id: repoObj.repo_id })
+      .then((data) => {
+        console.log(data, 'after findone')
+        if (!data) return repo.save()
+      })
+      // .catch((err) => {
+      //   reject(err)
+      // })
     // call the native save function?
-    repo.save((err, result) => {
-      if (err) {
-        return console.error(err);
-      }
-      // console.log(result, 'res in here')
-    });
+    // repo.save();
   },
+
+  // save: function (repos) {
+  //   // map the schema to match your data
+  //   let mapped = repos.map((repoObj) => {
+  //     return new Repo({
+  //       repo_id: repoObj.id,
+  //       name: repoObj.name,
+  //       owner: repoObj.owner.login,
+  //       description: repoObj.description,
+  //       stargazers_count: repoObj.stargazers_count,
+  //       html_url: repoObj.html_url,
+  //       updated_at: repoObj.updated_at
+  //     })
+  //   })
+  //   return Repo.insertMany(mapped)
+  // },
 
   get25: function () {
     return new Promise((resolve, reject) => {
